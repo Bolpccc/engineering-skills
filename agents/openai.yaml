@@ -1,0 +1,4 @@
+interface:
+  display_name: "Engineering Build"
+  short_description: "Implement confirmed engineering bundles with evidence"
+  default_prompt: "Use $engineering-build to implement the confirmed Engineering Bundle at the path I provide, verify it, update its actual status, and explain what is now true."
