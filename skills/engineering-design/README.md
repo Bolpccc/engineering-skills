@@ -34,9 +34,9 @@ For multi-stage or consequential work, the skill maintains a local, technical Bu
 └── ...
 ```
 
-After creating or revising the Bundle, the skill presents a conversation-only Human-readable Mapping in the same semantic order. The user confirms system behavior and boundaries without losing the ability to return to the technical source.
+After creating or revising the Bundle, the Skill prepares a domain-owned mapping packet and uses [`cognitive-bridge`](https://github.com/Bolpccc/cognitive-bridge) to present a conversation-only Human-readable Mapping in the same semantic order. The user confirms system behavior and boundaries without losing the ability to return to the technical source.
 
-A confirmed Bundle is the only stable interface to [`engineering-build`](https://github.com/Bolpccc/engineering-build). The Build skill implements it, updates evidence-backed status, and returns design-invalidating discoveries here for a new decision.
+A confirmed Bundle is the only stable interface to [`engineering-build`](../engineering-build). The Build Skill implements it, updates evidence-backed status, and returns design-invalidating discoveries here for a new decision.
 
 ## Boundaries
 
@@ -44,10 +44,14 @@ This skill does not implement code, run experiments, operate hardware, deploy, m
 
 ## Install
 
+Clone [`Bolpccc/engineering-skills`](https://github.com/Bolpccc/engineering-skills), then run:
+
 ```bash
-git clone https://github.com/Bolpccc/engineering-design.git \
-  ~/.codex/skills/engineering-design
+python3 scripts/install.py engineering-design
 ```
+
+Install `cognitive-bridge` for cognitively adapted mappings. Without it, the
+Skill retains a labeled, domain-complete fallback.
 
 ## Use
 
@@ -85,6 +89,6 @@ Diagrams are opt-in. The skill does not create or propose one unless the user ex
 - 小而明确的修改：只输出一次性实施要求，不生成文档。
 - 中大型或需要持续修订的工作：生成 Engineering Bundle，并按相同结构给出人话映射，确认后交给 `engineering-build`。
 
-Bundle 是两个 Skill 之间唯一稳定接口。实施发现设计假设不成立时，返回本 Skill 修订，而不是在 Build 阶段偷偷改变系统意图。
+Bundle 是两个 Skill 之间唯一稳定接口。领域映射仍由本 Skill 负责，`cognitive-bridge` 只负责组织用户如何理解。实施发现设计假设不成立时，返回本 Skill 修订，而不是在 Build 阶段偷偷改变系统意图。
 
 MIT License. See [LICENSE](LICENSE).

@@ -1,6 +1,6 @@
 ---
 name: engineering-build
-description: Implement a user-specified Engineering Bundle against the real codebase, verify the result, update evidence-backed Bundle status, and translate actual outcomes back into the Bundle's semantic structure. Use only when the user explicitly asks to build from an existing Bundle path. Do not use for ambiguous requirements, direct implementation briefs, new product or architecture design, or unconfirmed external and high-risk operations.
+description: Implement a user-specified Engineering Bundle against the real codebase, verify the result, update evidence-backed Bundle status, and explain actual outcomes through the Bundle's semantic structure and the user's current model. Use only when the user explicitly asks to build from an existing Bundle path. Do not use for ambiguous requirements, direct implementation briefs, new product or architecture design, or unconfirmed external and high-risk operations.
 ---
 
 # Engineering Build
@@ -36,7 +36,7 @@ Always read [bundle-build-protocol.md](references/bundle-build-protocol.md) befo
 7. Verify in proportion to causal uncertainty and consequence. Run targeted checks, a relevant known-good regression, and failure cases required by the Bundle. Escalate only when the Bundle or observed risk requires stronger evidence.
 8. Update the affected Bundle stage with what was actually implemented, the evidence obtained, what remains incomplete, and any new limitations. Do not rewrite design intent to make the implementation appear compliant.
 9. Update `MAP.md` only when evidence changes the current stage, route, dependency, shared boundary, or confirmed cross-stage decision.
-10. Return a Human-readable Build Result in the Bundle's original semantic order: planned behavior, actual implementation state, what the user can now expect, and what is still unproven.
+10. Form the evidence-bounded result packet from the Bundle and actual evidence, then load `$cognitive-bridge` with `purpose=review` to compose the Human-readable Build Result. Preserve the Bundle's original semantic order, planned behavior, actual implementation state, what the user can now expect, and what is still unproven.
 
 ## Design Authority Boundary
 
@@ -67,9 +67,9 @@ Under that heading, provide the evidence, affected Bundle anchor, implementation
 - Preserve unresolved design questions. Do not mark a stage complete while one still blocks its intended outcome.
 - Repair a stale relative link while updating the Bundle only when its intended target was uniquely resolved without changing structure or meaning. Report the repair; do not use Build authority for document reorganization.
 
-## Result Translation
+## Result Composition
 
-Follow the Bundle's major block order and recognizable anchors. For each implemented or deferred block, explain:
+Before invoking `$cognitive-bridge`, follow the Bundle's major block order and recognizable anchors. For each implemented or deferred block, supply:
 
 ```text
 Plan
@@ -78,6 +78,8 @@ What is now true
 What is still unproven
 ```
 
-Use natural headings rather than a rigid form. Lead with observable behavior, retain the minimum technical anchor needed to locate the evidence, and state acceptance and rejection results plainly. Do not call an existing capability newly implemented, or translate a diagnostic-only change as a control-behavior change.
+Also supply the evidence level, acceptance and rejection results, authority-limited steps, and any wording or distinction the user has already adopted. These are `must_preserve`; cognitive composition may change presentation but not engineering meaning. Do not call an existing capability newly implemented, translate a diagnostic-only change as a control-behavior change, or imply stronger validation.
+
+If `$cognitive-bridge` is unavailable, apply this result contract directly, label the result `Cognitive adaptation unavailable`, and still return every required state and anchor. Do not install a missing companion automatically or omit the result.
 
 Finish with the exact Bundle path, implementation revision when available, tests and evidence, incomplete items, authority-limited steps not performed, and whether the result is complete or must return to `$engineering-design`.

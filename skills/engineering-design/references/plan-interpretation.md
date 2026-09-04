@@ -19,9 +19,9 @@ Identify the plan's semantic anchors:
 
 Preserve these anchors. Small headings, paragraph order inside a block, repeated details, and low-value implementation mechanics may be compressed or rearranged.
 
-## Translate by Semantic Block
+## Build the Domain Mapping Packet
 
-For every major block, make the following decision chain understandable without turning it into a rigid form:
+For every major block, recover this decision chain before presentation:
 
 1. What is happening now in system or operator-visible terms.
 2. What the proposed or implemented change actually changes.
@@ -31,9 +31,7 @@ For every major block, make the following decision chain understandable without 
 6. What a person should observe to accept it.
 7. What result would reject the direction or reveal a different problem.
 
-Lead with behavior and observable effect. Introduce a technical term afterward as an anchor when it helps the reader find or question the source. Do not remove a term that carries architecture, safety, compatibility, or state meaning.
-
-Do not translate sentence by sentence. One technical sentence may require several behavioral sentences; a long parameter table may become one decision-relevant statement.
+Keep each link traceable to its source anchor. Do not remove a term that carries architecture, safety, compatibility, or state meaning. The packet is a semantic contract, not a sentence-by-sentence rewrite or a required user-facing template.
 
 ## Protect Status Truth
 
@@ -62,9 +60,9 @@ Use layered verification:
 
 When evidence conflicts with the plan, surface the conflict. Do not silently repair the source or choose the more convenient version.
 
-## Allocate Attention by Decision Value
+## Mark Decision Value
 
-Expand:
+Mark these as high decision value so the cognitive presentation cannot compress them away:
 
 - the root mechanism and the visible failure it produces;
 - the behavior change after implementation;
@@ -74,7 +72,7 @@ Expand:
 - problem coverage and uncovered causes;
 - acceptance observations and rejection signals.
 
-Compress by default:
+Mark these as normally compressible unless they change the user's decision:
 
 - function, class, and member names;
 - file paths and edit inventories;
@@ -83,41 +81,47 @@ Compress by default:
 - exhaustive log fields and routine test implementation;
 - corner cases that do not affect the user's current decision.
 
-This is written for a technical owner, not a novice. Prefer direct engineering language over analogies or simplified teaching prose.
+## Cognitive Composition Handoff
 
-## Default Conversation Shape
+After the domain packet is complete, load `$cognitive-bridge` with:
 
-Use two levels of disclosure.
+```text
+purpose: review
+source_content: the complete domain mapping packet
+must_preserve: original block order, anchors, causal links, coverage, safety,
+               interfaces, status, acceptance, and rejection conditions
+source_anchors: Bundle headings, identifiers, and consequential technical terms
+current_model_evidence: the user's own phrases, accepted relations, objections,
+                        and demonstrated understanding from this design discussion
+desired_depth: quick | standard | deep, inferred from the current request
+```
 
-First, in one to three short paragraphs, explain what the whole plan is intended to change and summarize the actual implementation and validation state.
+The default result should first make the whole intended behavior and actual plan
+state usable, then follow the Bundle's major semantic order. It must finish with
+what exists, what is planned, what lacks validation, the next decision-changing
+observations, rejection signals, and anchors for deeper reading. Cognitive
+composition may change local exposition but must not merge, reorder, or weaken
+the Bundle correspondence required for confirmation.
 
-Then follow the source plan's major order. Give each block a recognizable number or anchor and explain its observable behavior, coverage boundary, and acceptance evidence. Do not force identical headings on every block.
-
-Finish by collecting:
-
-- what is already available, what remains planned, and what still lacks real-system validation;
-- the smallest next test observations that can change the decision;
-- failure signals that would reject the current interpretation or plan;
-- source headings or technical anchors for deeper reading.
-
-Make the view easy to scan, but do not reduce it to slogans. Remove repetition before removing safety, status, causal, or rejection information.
+If the companion is unavailable, produce that minimum domain-preserving shape
+directly and label it `Cognitive adaptation unavailable`.
 
 ## Correction and Confirmation Loop
 
-When the user corrects an effect, boundary, premise, or acceptance interpretation:
+When the user corrects an effect, boundary, premise, or acceptance interpretation, `$engineering-design` owns this loop:
 
 1. identify the affected technical semantic block;
 2. inspect any discoverable fact that determines whether the objection is valid;
 3. revise the technical block before changing the mapping;
 4. downgrade any design or completion claim no longer supported;
-5. retranslate the affected block in the conversation;
+5. rebuild the affected mapping packet and invoke `$cognitive-bridge` again;
 6. after all corrections settle, present the complete mapping again.
 
 Do not treat agreement with one translated block as approval of the whole Bundle. The Bundle is ready for `$engineering-build` only after explicit confirmation that the complete mapped behavior, boundaries, and acceptance reflect the user's intent.
 
 ## Misalignment and Non-goals
 
-Interpretation may judge whether the plan addresses the observed problem and whether its claimed state has adequate support. It must not become a redesign, architecture review, code review, mathematical proof, product interview, priority-setting exercise, or approval decision.
+Domain mapping may judge whether the plan addresses the observed problem and whether its claimed state has adequate support. Cognitive composition must not become a redesign, architecture review, code review, mathematical proof, product interview, priority-setting exercise, or approval decision.
 
 If a block solves a different mechanism from the one the user experiences, say precisely what it solves and what remains unexplained. Re-enter requirements discovery only when that mismatch changes the goal, scope, or next iteration.
 

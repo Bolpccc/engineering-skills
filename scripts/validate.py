@@ -31,7 +31,7 @@ def validate_links(root: Path) -> list[str]:
     for markdown in root.rglob("*.md"):
         for raw in LINK_RE.findall(markdown.read_text()):
             link = raw.split("#", 1)[0]
-            if not link or "://" in link or link.startswith(("#", "/")):
+            if not link or "{{" in link or "://" in link or link.startswith(("#", "/")):
                 continue
             if not (markdown.parent / link).resolve().exists():
                 errors.append(f"broken link: {markdown.relative_to(REPO_ROOT)} -> {raw}")
@@ -97,4 +97,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

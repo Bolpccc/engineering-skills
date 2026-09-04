@@ -1,6 +1,6 @@
 ---
 name: engineering-design
-description: Clarify an engineering need in system-behavior language, inspect the real system, and turn the aligned result into either a compact direct-implementation brief or a lightweight technical Engineering Bundle with a human-readable mapping. Use when software, robotics, infrastructure, or app behavior is still being discussed, challenged, or designed before implementation. Do not use to implement code, execute an existing Bundle, manage project trackers, or publish externally.
+description: Clarify an engineering need in system-behavior language, inspect the real system, and turn the aligned result into either a compact direct-implementation brief or a lightweight technical Engineering Bundle with a cognitively adapted human-readable mapping. Use when software, robotics, infrastructure, or app behavior is still being discussed, challenged, or designed before implementation. Do not use to implement code, execute an existing Bundle, manage project trackers, or publish externally.
 ---
 
 # Engineering Design
@@ -68,9 +68,10 @@ Use this when the work spans dependent outcomes, has consequential architecture,
 - Keep `MAP.md` and stage documents technical and implementation-grade. Record behavior, technical analysis, selected design, affected responsibilities, interfaces, safety boundaries, implementation slices, acceptance evidence, rejection conditions, and unresolved decisions.
 - Make the current stage concrete, the next directional, and later stages skeletal. Update only the affected stage unless the route, current stage, shared boundary, or key cross-stage decision changes.
 - Preserve direct human edits. Verify factual or technical claims and surface contradictions; never silently restore an earlier AI formulation.
-- After creating or materially revising the Bundle, immediately produce the conversation-only Human-readable Mapping from [plan-interpretation.md](references/plan-interpretation.md). Preserve the Bundle's semantic block order so the user can move between outcome language and technical detail.
+- After creating or materially revising the Bundle, form the domain-owned mapping packet from [plan-interpretation.md](references/plan-interpretation.md), then load `$cognitive-bridge` to compose the conversation-only Human-readable Mapping. Preserve the Bundle's semantic block order, technical anchors, coverage, status, and acceptance meaning so the user can move between outcome language and technical detail.
 - If the user corrects the mapping, first revise the affected technical block, then retranslate that block. When corrections settle, present the complete mapping again.
 - A Bundle becomes ready for `$engineering-build` only after the user explicitly confirms that the mapped behavior, boundaries, and acceptance match their intent. Confirmation does not authorize commit, push, deployment, remote actions, or hardware operation.
+- If `$cognitive-bridge` is unavailable, apply the domain mapping contract directly, label the result `Cognitive adaptation unavailable`, and still return every required anchor and boundary. Do not install a missing companion automatically or omit the mapping.
 
 ## Diagram Composition
 
@@ -82,7 +83,7 @@ Use this when the work spans dependent outcomes, has consequential architecture,
 
 ## Evidence Re-entry
 
-When implementation, test, simulation, field, or research evidence returns, identify which assumption, decision, status, or acceptance claim it changes. Update only the affected technical material, retain conclusions still supported, and regenerate the affected Human-readable Mapping. A new design or implementation decision requires a new confirmation; evidence does not silently broaden the authorized scope.
+When implementation, test, simulation, field, or research evidence returns, identify which assumption, decision, status, or acceptance claim it changes. Update only the affected technical material, retain conclusions still supported, and regenerate the affected mapping packet before invoking `$cognitive-bridge` again. A new design or implementation decision requires a new confirmation; evidence does not silently broaden the authorized scope.
 
 ## Handoff
 

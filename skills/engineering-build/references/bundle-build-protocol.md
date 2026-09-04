@@ -103,9 +103,9 @@ Update the technical Bundle only after inspecting actual results:
 
 Update only the affected stage. Change `MAP.md` only when evidence moves the current stage, completes a dependency, or changes a shared decision. Preserve human edits and surface contradictions.
 
-## Human-readable Build Result
+## Human-readable Build Result Packet
 
-Use the Bundle's own major order. For each consequential block, explain:
+Use the Bundle's own major order. Before presentation, build a packet for every consequential block:
 
 - what behavior was planned;
 - what was actually changed or left unchanged;
@@ -113,7 +113,17 @@ Use the Bundle's own major order. For each consequential block, explain:
 - what the user can observe or rely on;
 - what remains unproven or outside this build.
 
-Retain source anchors such as stage numbers and key technical terms. Compress functions, file lists, parameters, and routine test mechanics unless they affect the user's decision. Never elevate status while translating it.
+Retain source anchors such as stage numbers and key technical terms. Attach the exact evidence level, acceptance or rejection result, incomplete and authority-limited steps, and any relevant language or distinction the user has already adopted. These are `must_preserve`; never elevate status during composition.
+
+Load `$cognitive-bridge` with `purpose=review`, the complete packet as
+`source_content`, the Bundle anchors as `source_anchors`, and the protected state,
+coverage, evidence, safety, interface, acceptance, and rejection fields as
+`must_preserve`. It may compress functions, file lists, parameters, and routine
+test mechanics unless they affect the user's decision. It may not change the
+Bundle's semantic order or engineering outcome.
+
+If `$cognitive-bridge` is unavailable, produce the minimum packet directly and
+label it `Cognitive adaptation unavailable`; do not omit the result.
 
 End with one of three outcomes:
 

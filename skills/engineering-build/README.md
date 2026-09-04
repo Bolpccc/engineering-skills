@@ -13,6 +13,8 @@ engineering-build
        |
        +-- implementation + evidence --> updated Bundle
        `-- invalid design assumption --> engineering-design
+
+evidence-bounded result -> cognitive-bridge -> user-facing explanation
 ```
 
 ## Use
@@ -27,16 +29,21 @@ The skill reads the Map and current stage, checks the real repository and curren
 
 The Bundle defines system behavior, safety, interfaces, important architecture responsibility, acceptance, and rejection conditions. Engineering Build may decide local code organization, helpers, private data structures, ordinary corner cases, and test mechanics.
 
-If implementation would require changing the Bundle's consequential contract, it stops with `Bundle assumption invalid` or `Design decision required` and returns the issue to [`engineering-design`](https://github.com/Bolpccc/engineering-design).
+If implementation would require changing the Bundle's consequential contract, it stops with `Bundle assumption invalid` or `Design decision required` and returns the issue to [`engineering-design`](../engineering-design).
 
 The Bundle does not authorize commit, push, deployment, remote mutation, hardware operation, or destructive actions. Those remain subject to the user's current request and environment rules.
 
 ## Install
 
+Clone [`Bolpccc/engineering-skills`](https://github.com/Bolpccc/engineering-skills), then run:
+
 ```bash
-git clone https://github.com/Bolpccc/engineering-build.git \
-  ~/.codex/skills/engineering-build
+python3 scripts/install.py engineering-build
 ```
+
+Install [`cognitive-bridge`](https://github.com/Bolpccc/cognitive-bridge) for
+cognitively adapted results. Without it, the Skill retains a labeled,
+domain-complete fallback.
 
 ## Repository structure
 
