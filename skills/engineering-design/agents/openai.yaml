@@ -1,0 +1,4 @@
+interface:
+  display_name: "Engineering Design"
+  short_description: "Turn human needs into confirmed engineering designs"
+  default_prompt: "Use $engineering-design to clarify the system behavior I need and help me choose a direct implementation brief or a confirmed Engineering Bundle."
