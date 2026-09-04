@@ -9,6 +9,10 @@ owns implementation and evidence. User-facing explanations use the external
 [`cognitive-bridge`](https://github.com/Bolpccc/cognitive-bridge) companion when
 available.
 
+Current repository release: `v1.0.0`. Repository snapshots and individual Skill
+versions follow [VERSIONING.md](VERSIONING.md); changes are recorded in
+[CHANGELOG.md](CHANGELOG.md).
+
 ## Install
 
 ```bash
@@ -25,4 +29,3 @@ python3 scripts/validate.py
 ```
 
 See `skills-manifest.json` for the canonical catalog and dependency contract.
-

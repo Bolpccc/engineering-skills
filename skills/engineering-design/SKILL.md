@@ -1,6 +1,8 @@
 ---
 name: engineering-design
 description: Clarify an engineering need in system-behavior language, inspect the real system, and turn the aligned result into either a compact direct-implementation brief or a lightweight technical Engineering Bundle with a cognitively adapted human-readable mapping. Use when software, robotics, infrastructure, or app behavior is still being discussed, challenged, or designed before implementation. Do not use to implement code, execute an existing Bundle, manage project trackers, or publish externally.
+metadata:
+  version: 1.0.0
 ---
 
 # Engineering Design

@@ -1,5 +1,7 @@
 {
+  "schema_version": 1,
   "repository": "Bolpccc/engineering-skills",
+  "repository_version": "1.0.0",
   "visibility": "public",
   "external_skills": [
     "cognitive-bridge",
@@ -8,6 +10,7 @@
   "skills": [
     {
       "name": "engineering-design",
+      "version": "1.0.0",
       "path": "skills/engineering-design",
       "visibility": "public",
       "depends_on": ["cognitive-bridge"],
@@ -16,6 +19,7 @@
     },
     {
       "name": "engineering-build",
+      "version": "1.0.0",
       "path": "skills/engineering-build",
       "visibility": "public",
       "depends_on": ["cognitive-bridge"],
@@ -24,4 +28,3 @@
     }
   ]
 }
-

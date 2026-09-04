@@ -12,6 +12,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = REPO_ROOT / "skills-manifest.json"
 LINK_RE = re.compile(r"\[[^]]*\]\(([^)]+)\)")
+SEMVER_RE = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$")
 
 
 def frontmatter(text: str) -> dict[str, str]:
@@ -24,6 +25,23 @@ def frontmatter(text: str) -> dict[str, str]:
             key, value = line.split(":", 1)
             values[key.strip()] = value.strip().strip('"')
     return values
+
+
+def metadata_version(text: str) -> str | None:
+    match = re.match(r"^---\n(.*?)\n---\n", text, re.S)
+    if not match:
+        return None
+    lines = match.group(1).splitlines()
+    for index, line in enumerate(lines):
+        if line.strip() != "metadata:":
+            continue
+        for child in lines[index + 1 :]:
+            if child and not child[0].isspace():
+                break
+            version = re.match(r"^\s+version:\s*([^\s]+)\s*$", child)
+            if version:
+                return version.group(1)
+    return None
 
 
 def validate_links(root: Path) -> list[str]:
@@ -44,6 +62,16 @@ def main() -> int:
     names = {item["name"] for item in entries}
     allowed = names | set(data.get("external_skills", []))
     errors: list[str] = []
+    repo_version = (REPO_ROOT / "VERSION").read_text().strip()
+
+    if data.get("schema_version") != 1:
+        errors.append("unsupported manifest schema_version")
+    if not SEMVER_RE.fullmatch(repo_version):
+        errors.append("VERSION is not stable SemVer")
+    if data.get("repository_version") != repo_version:
+        errors.append("repository_version does not match VERSION")
+    if f"## [{repo_version}]" not in (REPO_ROOT / "CHANGELOG.md").read_text():
+        errors.append("CHANGELOG.md has no entry for VERSION")
 
     if len(names) != len(entries):
         errors.append("duplicate skill names in manifest")
@@ -58,9 +86,15 @@ def main() -> int:
         if not skill_file.is_file() or not agent_file.is_file():
             errors.append(f"missing required files for {name}")
             continue
-        metadata = frontmatter(skill_file.read_text())
+        skill_text = skill_file.read_text()
+        metadata = frontmatter(skill_text)
         if metadata.get("name") != name or not metadata.get("description"):
             errors.append(f"invalid frontmatter for {name}")
+        skill_version = item.get("version")
+        if not isinstance(skill_version, str) or not SEMVER_RE.fullmatch(skill_version):
+            errors.append(f"invalid manifest version for {name}")
+        if metadata_version(skill_text) != skill_version:
+            errors.append(f"SKILL.md metadata.version mismatch for {name}")
         if f"${name}" not in agent_file.read_text():
             errors.append(f"default prompt does not invoke ${name}")
         dependencies = item.get("depends_on", [])

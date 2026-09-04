@@ -1,6 +1,8 @@
 ---
 name: engineering-build
 description: Implement a user-specified Engineering Bundle against the real codebase, verify the result, update evidence-backed Bundle status, and explain actual outcomes through the Bundle's semantic structure and the user's current model. Use only when the user explicitly asks to build from an existing Bundle path. Do not use for ambiguous requirements, direct implementation briefs, new product or architecture design, or unconfirmed external and high-risk operations.
+metadata:
+  version: 1.0.0
 ---
 
 # Engineering Build
