@@ -1,0 +1,27 @@
+{
+  "repository": "Bolpccc/engineering-skills",
+  "visibility": "public",
+  "external_skills": [
+    "cognitive-bridge",
+    "mermaid-skill"
+  ],
+  "skills": [
+    {
+      "name": "engineering-design",
+      "path": "skills/engineering-design",
+      "visibility": "public",
+      "depends_on": ["cognitive-bridge"],
+      "routes_to": ["engineering-build", "mermaid-skill"],
+      "install_target": "~/.codex/skills/engineering-design"
+    },
+    {
+      "name": "engineering-build",
+      "path": "skills/engineering-build",
+      "visibility": "public",
+      "depends_on": ["cognitive-bridge"],
+      "routes_to": ["engineering-design"],
+      "install_target": "~/.codex/skills/engineering-build"
+    }
+  ]
+}
+
