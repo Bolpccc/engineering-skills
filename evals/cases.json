@@ -1,0 +1,43 @@
+[
+  {
+    "id": "design-mapping",
+    "skills": [
+      "engineering-design",
+      "cognitive-bridge"
+    ],
+    "prompt": "请读取 bundle/MAP.md 和各阶段，解释这份现有 Bundle 供我确认。保留全部区块，不画图、不修改文件。请给真正的说明正文。",
+    "rubric": [
+      "B1/B2/B3 order and anchors intact",
+      "Direct/indirect/uncovered boundaries",
+      "<2 seconds acceptance and command-change rejection",
+      "Planned not implemented, no inferred approval"
+    ],
+    "files": {
+      "bundle/MAP.md": "# Synthetic cache observability bundle\n\nCurrent: D1. D2 and D3 are later stages.\n\n- [D1 — cache refresh](D1.md)\n- [D2 — retry diagnostics](D2.md)\n- [D3 — network-loss boundary](D3.md)\n\nShared boundary: no control command or network retry policy changes.\n",
+      "bundle/D1.md": "# D1 / B1 Cache refresh\n\nStatus: planned, not implemented. Stale cache survives update notifications because invalidation is missing. Selected design: invalidate only changed keys on notification, preserving existing API. Direct coverage: stale reads after notification. Indirect: fewer redundant retries. Not covered: network loss. Acceptance: changed cache entry refresh <2 seconds after notification. Reject: stale reads persist, or any control command changes. Implementation slice: add invalidation, then targeted tests. Open decisions: none.\n",
+      "bundle/D2.md": "# D2 / B2 Retry diagnostics\n\nStatus: planned, not implemented. Add timestamps to retry logs. Direct coverage: observability of retry timing. Does not change retry policy or commands. Acceptance: each retry has correlated timestamps. Reject: altered retry behavior.\n",
+      "bundle/D3.md": "# D3 / B3 Network loss\n\nStatus: deferred. D1/D2 do not solve network loss. No implementation authorized. Acceptance for any future design requires a separately confirmed network-loss policy.\n"
+    },
+    "allow_fixture_writes": false
+  },
+  {
+    "id": "build-result",
+    "skills": [
+      "engineering-build",
+      "cognitive-bridge"
+    ],
+    "prompt": "这是已完成的合成实现切片。请按 engineering-build 的结果契约读取 bundle/MAP.md、B1、implementation.py、evidence.json，报告实际结果；本次只读复核结果，不继续实现或补测。",
+    "rubric": [
+      "Logging-only change, no control behavior claim",
+      "12 unit checks are source-declared; offline/sim/hardware/field unproven",
+      "Plan vs actual, exact Bundle anchor, incomplete stage clear"
+    ],
+    "files": {
+      "bundle/MAP.md": "# Synthetic build bundle\n\nCurrent stage: [B1](B1.md).\n",
+      "bundle/B1.md": "# B1 Logging-only latency visibility\n\nIntent: expose handler latency without changing outputs or control behavior. No public API change. Implement wrapper timing and targeted tests. Acceptance: measured duration emitted once per call; result and exception behavior preserved. Reject any control-command change. Hardware/field validation is a later separately authorized stage. No open design decisions.\n",
+      "implementation.py": "def identity(value):\n    return value\n\ndef observe(handler, value, clock, log):\n    start = clock()\n    try:\n        return handler(value)\n    finally:\n        log(clock() - start)\n",
+      "evidence.json": "{\"state\": \"implemented\", \"checks\": {\"unit\": {\"passed\": 12, \"failed\": 0}, \"offline\": null, \"simulation\": null, \"hardware\": null, \"field\": null, \"acceptance\": null}, \"scope\": \"synthetic supplied evidence; not independent execution\"}"
+    },
+    "allow_fixture_writes": false
+  }
+]

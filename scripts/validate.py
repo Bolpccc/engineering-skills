@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+import argparse
+from governance import catalog_errors
 import json
 import re
 import sys
@@ -122,6 +124,10 @@ def main() -> int:
     for name in names:
         visit(name)
 
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--installed-root', type=Path, help='Check the actual installed dependency surface; never install missing companions')
+    args = parser.parse_args()
+    errors.extend(catalog_errors(REPO_ROOT, json.loads((REPO_ROOT / 'skills-manifest.json').read_text()), args.installed_root.expanduser().resolve() if args.installed_root else None))
     if errors:
         print("\n".join(sorted(set(errors))), file=sys.stderr)
         return 1
